@@ -25,13 +25,13 @@ class MackeyGlass:
         k3 = delta_t*self.f(y_t+0.5*k2,   y_t_minus_tau) #  + delta_t*0.5
         k4 = delta_t*self.f(y_t+k3,       y_t_minus_tau) # + delta_t
         return y_t + k1/6 + k2/3 + k3/3 + k4/6
+         
     def gen(self, y0=0.5, delta_t=1, n=12000):
         time = 0
         index = 1
         history_length = math.floor(self.tau / delta_t)
-        y_history = np.full((history_length, 1), 0.5)
+        y_history = np.full(history_length, 0.5)
         y_t = y0
-
         Y = np.zeros((n+1, 1))
         T = np.zeros((n+1, 1))
 
@@ -45,8 +45,7 @@ class MackeyGlass:
                 y_t_minus_tau = y_history[index]
 
             y_t_plus_delta = self.rk4(y_t, y_t_minus_tau, delta_t)
-            
-            print(y_t, y_t_minus_tau, y_t_plus_delta)
+            print(y_t, y_t_minus_tau, y_t_plus_delta, time)
             if self.tau != 0:
                 y_history[index] = y_t_plus_delta
                 index = (index+1) % history_length
@@ -56,6 +55,7 @@ class MackeyGlass:
         Y, T = self.gen()
         Y = Y[discard:]
         T = T[discard:]
+        
         ''' plot  '''
         #plt.plot(Y[:-tau], Y[tau:])
         plt.plot(Y[2000-self.tau:2500-self.tau], Y[2000:2500])
