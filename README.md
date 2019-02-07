@@ -1,1 +1,1 @@
-# LSTM is used to simulate the Mackey-Glass time series
+# LSTM is used for simulate the Mackey-Glass time series
